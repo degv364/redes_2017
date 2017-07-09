@@ -5,14 +5,15 @@ import sys
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 # Connect the socket to the port where the server is listening
-server_address = ('localhost', 10000)
-print >>sys.stderr, 'connecting to %s port %s' % server_address
+server_address = ('localhost', 5006)
+print "Conecting to server", server_address
+
 sock.connect(server_address)
 try:
     
     # Send data
     message = 'palabra.'
-    print >>sys.stderr, 'sending "%s"' % message
+    print "sending> ", message
     sock.sendall(message)
 
     # Look for the response
@@ -22,8 +23,8 @@ try:
     while amount_received < amount_expected:
         data = sock.recv(16)
         amount_received += len(data)
-        print >>sys.stderr, 'received "%s"' % data
+        print "Received: ", data
 
 finally:
-    print >>sys.stderr, 'closing socket'
+    #Cerrar el socket
     sock.close()
