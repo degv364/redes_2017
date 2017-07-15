@@ -2,6 +2,7 @@
 #En este archivo se definen alguans funciones utilitarias
 #comunes del servidor y el cliente
 import socket
+from datetime import datetime as dt
 
 '''
 Le solicita al usuario un mensaje para ser enviado
@@ -18,7 +19,7 @@ y un puerto especificos
 def send_message(message="default", ip="127.0.0.1", port=1000):
     #Se crea el Socket UDP
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    print "Mensaje a enviar: "+message
+    print str(dt.now())+" Mensaje a enviar: "+message
     #Se envia el mensaje
     sock.sendto(message, (ip, port))
     #Se destruye el socket
@@ -35,7 +36,7 @@ def recv_message(ip="127.0.0.1", port=1000):
     sock.bind((ip, port))
     #Blockea hasta recibir un mensaje
     data, addr = sock.recvfrom(1024) #buffer size is 1024B
-    print "Mensaje recibido: "+ str(data)
+    print str(dt.now())+" Mensaje recibido: "+ str(data)
     #Se destruye el socket
     del(sock)
     #Se retorna el mensaje
