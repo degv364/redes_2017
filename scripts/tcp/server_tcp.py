@@ -1,25 +1,34 @@
 import socket
-import sys
 
-my_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+#Crear el socket de bienvenida, y asignarle direccion
+welcome_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 server_address = ('localhost', 12343)
-my_socket.bind(server_address)
-my_socket.listen(1)
+welcome_socket.bind(server_address)
+
+#El socket escucha por peticiones de conexion
+welcome_socket.listen(1)
 client_data = ''
 
 while True:
-    connection, client_address = my_socket.accept()
+    #Al recibir una conexion se crea un nuevo socket llamado
+    #connection_socket, que es el qeu establece la conexion entre
+    #el servidor y el cliente
+    connection_socket, client_address = welcome_socket.accept()
     
     try:
         while client_data != 'fin':
-            client_data = connection.recv(1024)
+            #se reciben los datos del cliente
+            client_data = connection_socket.recv(1024)
 	    if client_data:
-	        connection.sendall(client_data.upper())
+                #Se retorna el mensaje en mayusculas
+	        connection_socket.sendall(client_data.upper())
                 print "Enviando dato al cliente: ", client_data.upper()
 	    else:
-                print "No hay mas datos"
+                #En caso de no recibir datos
+                print "No mas datos..."
 		break
     finally:
-	connection.close()
+        #se cierra la conexion tcp
+	connection_socket.close()
 
-connection.close()
+connection_socket.close()
