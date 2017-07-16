@@ -20,9 +20,11 @@ while True:
             #se reciben los datos del cliente
             client_data = connection_socket.recv(1024)
 	    if client_data:
+		print "Mensaje recibido: ", client_data
                 #Se retorna el mensaje en mayusculas
 	        connection_socket.sendall(client_data.upper())
-                print "Enviando dato al cliente: ", client_data.upper()
+		
+		print "Enviando dato al cliente: ", client_data.upper()
 	    else:
                 #En caso de no recibir datos
                 print "No mas datos..."
