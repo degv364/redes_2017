@@ -39,6 +39,8 @@ def main():
 
         #Se detiene la ejecucion en caso de ser necesario
         continuar = (message!="fin")
+
+    del(sock)
     
 if __name__=="__main__":
     main()
