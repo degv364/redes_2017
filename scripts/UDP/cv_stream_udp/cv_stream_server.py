@@ -1,4 +1,5 @@
 import socket
+import time
 import numpy as np
 import struct
 import argparse
@@ -34,7 +35,7 @@ def main():
 
     
     fmt = struct.Struct('!I')
-    SEGMENT_SIZE = 60000
+    SEGMENT_SIZE = 30000
     data_size = SEGMENT_SIZE-fmt.size
     
     try:
@@ -50,6 +51,7 @@ def main():
                     print "frame_offset: ", frame_offset
                 data = frame_str[frame_offset:frame_offset+curr_size]
                 sock.sendto(fmt.pack(frame_offset)+data, client_addr)
+                time.sleep(0.001)
                 frame_offset += curr_size
                 
     except KeyboardInterrupt:
