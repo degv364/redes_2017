@@ -1,27 +1,44 @@
 #Proyecto redes de computadoras
 #En este archivo se define el cliente UDP
+import socket
+from datetime import datetime as dt
 
-#Biblioteca del proyecto
-from common import *
+
+'''
+Le solicita al usuario un mensaje para ser enviado
+Retorna el mensaje escrito por el usuario en minusculas
+'''
+def user_get_message():
+    inp = raw_input("Digite el mensaje a enviar: ")
+    return inp.lower()
+
 
 def main():
-    #Como la comunicacion se realiza dentor de la misma
+    #Como la comunicacion se realiza dentro de la misma
     #computadora se utiliza localhost como direccion IP
     udp_ip="127.0.0.1"
     
-    #Se definen los puertos para los sockets
-    send_port=5005
-    recv_port=5006
-    
-    #Se recibe el input de usuario
-    message = user_get_message()
+    #Se define el puerto del servidor
+    port=5005
 
-    #se envia el mensaje
-    send_message(message, udp_ip, send_port)
+    #se crea el socket
+    sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
-    #se recibe el mensaje
-    message = recv_message(udp_ip, recv_port)
+    continuar = True
+    while continuar:
+        #Se recibe el input de usuario
+        message = user_get_message()
+        
+        #se envia el mensaje
+        print str(dt.now())+" Mensaje a enviar: "+message
+        sock.sendto(message, (udp_ip, port))
     
+        #se recibe el mensaje
+        data, addr = sock.recvfrom(1024)
+        print str(dt.now())+" Mensaje recibido: "+ data
+
+        #Se detiene la ejecucion en caso de ser necesario
+        continuar = (message!="fin")
     
 if __name__=="__main__":
     main()
