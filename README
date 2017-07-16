@@ -1,0 +1,70 @@
+Este es el proyecto final de Redes de Computadoras.
+
+Daniel García Vaglio, B42781
+Esteban Zamora Alvarado, B47769
+Joel Rodriguez Pineda , B25706 
+César Valverde Zúñiga, A86605
+
+En los comandos se utiliza <python2>. Esto porque muchos sistemas
+tienen a python3 por defecto. Si su sistema tiene python2 por
+defecto, basta con escribir python solamente. En todo caso, la
+mayor parte de estos sistemas redireccionan python2 a python.
+
+Se supone un UNIX-like OS.
+
+=====Ejecutar aplicacion simple UDP=====
+Desde la raiz del proyecto, abra dos terminales, una es apra el cliente y otra para el servidor.
+
+---servidor---
+cd scripts/UDP
+python2 server.py
+
+---cliente---
+cd scripts/UDP
+python2 client.py
+
+Para finalizar la ejecucion de ambos programas envie la palabra "fin"
+desde el cliente, sin comillas.
+
+=====Ejecutar aplicacion simple TCP=====
+Desde la raiz del proyecto, abra dos terminales, una es apra el cliente y otra para el servidor.
+
+---servidor---
+cd scripts/TCP
+python2 server_tcp.py
+
+---cliente---
+cd scripts/TCP
+python2 client_tcp.py
+
+El cliente finaliza luego de un mensaje. Para finalizar al servidor
+inicialice una nueva instancia del cleinte y envie la palabra "fin"
+sin comillas.
+
+=====Ejecutar straming con TCP=====
+Antes de proceder, se debe asegurar que tiene opencv intalado,
+Y la biblioteca de opencv para Python
+
+Desde la raiz del proyecto, abra dos terminales, una es apra el cliente y otra para el servidor.
+
+---servidor---
+cd scripts/TCP/cv_stream_tcp
+python2 cv_stream_server.py
+
+---cliente---
+cd scripts/TCP/cv_stream_tcp
+python2 cv_stram_client.py
+
+=====Ejecutar straming con UDP=====
+Antes de proceder, se debe asegurar que tiene opencv intalado,
+Y la biblioteca de opencv para Python
+
+Desde la raiz del proyecto, abra dos terminales, una es apra el cliente y otra para el servidor.
+
+---servidor---
+cd scripts/UDP/cv_stream_udp
+python2 cv_stream_server.py
+
+---cliente---
+cd scripts/UDP/cv_stream_udp
+python2 cv_stram_client.py
