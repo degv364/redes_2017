@@ -27,8 +27,11 @@ while True:
                 #En caso de no recibir datos
                 print "No mas datos..."
 		break
+	if (client_data == 'fin'):
+		exit(0)
+		connection_socket.close()
+		
     finally:
         #se cierra la conexion tcp
 	connection_socket.close()
-
-connection_socket.close()
+	
