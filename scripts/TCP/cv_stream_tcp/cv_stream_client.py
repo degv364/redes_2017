@@ -1,8 +1,8 @@
 import numpy as np
 import cv2
-import pickle
 import argparse
-from socket_custom import *
+from custom_socket_tcp import *
+
 
 def main():
     parser = argparse.ArgumentParser()
@@ -18,21 +18,24 @@ def main():
         while request != "STREAM":
             request = raw_input('--> ')
             sock.send(request)
-        
     except:
         print "Connection closed: Could not send message"
     else:
         try:
             while True: #Get Video Streaming
-                frame = pickle.loads(sock.receive())
+                frame = np.fromstring(sock.receive(),dtype=np.uint8).reshape(480,640,3)
                 cv2.imshow('frame', frame)
                 if cv2.waitKey(1) & 0xFF == ord('q'):
                     break
-        except:
+
+        except socket.error:
             print "Connection closed: Could not receive streaming"
-                
-        sock.close()
-        cv2.destroyAllWindows()
+        except KeyboardInterrupt:
+            print "Closing client..."
+
+    cv2.destroyAllWindows()            
+    sock.close()
+        
 
 if __name__ == "__main__":
     main()

@@ -1,8 +1,7 @@
 import numpy as np
 import cv2
-import pickle
 import argparse
-from socket_custom import *
+from custom_socket_tcp import *
 
 def main():
     parser = argparse.ArgumentParser()
@@ -13,6 +12,9 @@ def main():
     
     server = server_tcp_socket(args.hostname, args.port)    
     cap = cv2.VideoCapture(0)
+    cap.set(cv2.cv.CV_CAP_PROP_FRAME_HEIGHT,480)
+    cap.set(cv2.cv.CV_CAP_PROP_FRAME_WIDTH,640)
+        
     try:
         while True:
             print "Waiting for client connection..."
@@ -33,7 +35,8 @@ def main():
                     #Send Video Streaming
                     while True:
                         ret, frame = cap.read()
-                        csock.send(pickle.dumps(frame))
+                        msg = frame.flatten().tostring()
+                        csock.send(msg)
                 except:
                     print "Connection closed: Finished video streaming"
                 
