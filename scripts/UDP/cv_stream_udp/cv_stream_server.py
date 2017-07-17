@@ -4,7 +4,7 @@ import numpy as np
 import struct
 import argparse
 import cv2
-#from cv2 import *
+
 
 
 def main():
@@ -16,7 +16,9 @@ def main():
 
     parser.add_argument("-n", "--new_version", help="Use opencv3 instead of opencv2", action="store_true")
 
-    parser.add_argument("--seg_size", help="Tamano del segmento", type=int, default = 30000)
+    parser.add_argument("-s", "--seg_size", help="Tamano del segmento", type=int, default = 30000)
+
+    parser.add_argument("-l", "--lento", help="Multiplicador de que tan lento se quiere", type=float, default=1.0)
     args = parser.parse_args()
 
     cap = cv2.VideoCapture(0)
@@ -60,7 +62,7 @@ def main():
                     print "frame_offset: ", frame_offset
                 data = frame_str[frame_offset:frame_offset+curr_size]
                 sock.sendto(fmt.pack(frame_offset)+data, client_addr)
-                time.sleep(0.001)
+                time.sleep(args.lento/1000.0)
                 frame_offset += curr_size
                 
     except KeyboardInterrupt:
