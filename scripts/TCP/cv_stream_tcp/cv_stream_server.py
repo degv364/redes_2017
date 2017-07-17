@@ -8,12 +8,17 @@ def main():
     parser.add_argument("hostname", help="Server hostname or IP Address")
     parser.add_argument("port", help="Server port to listen for connections",
                         type=int)
+    parser.add_argument("-n", "--new_version", help="Use opencv3 instead of opencv2", action="store_true")
     args = parser.parse_args()
     
     server = server_tcp_socket(args.hostname, args.port)    
     cap = cv2.VideoCapture(0)
-    cap.set(cv2.cv.CV_CAP_PROP_FRAME_HEIGHT,480)
-    cap.set(cv2.cv.CV_CAP_PROP_FRAME_WIDTH,640)
+    if args.new_version:
+        cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
+        cap.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
+    else:
+        cap.set(cv2.cv.CV_CAP_PROP_FRAME_HEIGHT,480)
+        cap.set(cv2.cv.CV_CAP_PROP_FRAME_WIDTH,640)
         
     try:
         while True:

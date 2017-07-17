@@ -4,6 +4,7 @@ import numpy as np
 import struct
 import argparse
 import cv2
+#from cv2 import *
 
 
 def main():
@@ -12,11 +13,19 @@ def main():
     parser.add_argument("port", help="Server port to listen for connections",
                         type=int)
     parser.add_argument("-d", "--debug", help="Enable debug messages", action="store_true")
+
+    parser.add_argument("-n", "--new_version", help="Use opencv3 instead of opencv2", action="store_true")
+
+    parser.add_argument("--seg_size", help="Tamano del segmento", type=int, default = 30000)
     args = parser.parse_args()
 
     cap = cv2.VideoCapture(0)
-    cap.set(cv2.cv.CV_CAP_PROP_FRAME_HEIGHT,480)
-    cap.set(cv2.cv.CV_CAP_PROP_FRAME_WIDTH,640)
+    if args.new_version:
+        cap.set(cv2.CAP_PROP_FRAME_HEIGHT,480)
+        cap.set(cv2.CAP_PROP_FRAME_WIDTH,640)
+    else:
+        cap.set(cv2.cv.CV_CAP_FRAME_HEIGHT, 480)
+        CAP.set(cv2.cv.CV_CAP_FRAME_WIDTH, 640)
 
     
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -35,7 +44,7 @@ def main():
 
     
     fmt = struct.Struct('!I')
-    SEGMENT_SIZE = 30000
+    SEGMENT_SIZE = args.seg_size
     data_size = SEGMENT_SIZE-fmt.size
     
     try:
